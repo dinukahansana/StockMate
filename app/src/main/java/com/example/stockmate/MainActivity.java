@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Add Product Button
         btnAddProduct.setOnClickListener(v -> {
-            Toast.makeText(
-                    this,
-                    "Add Product screen coming next!",
-                    Toast.LENGTH_SHORT
-            ).show();
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    AddEditProductActivity.class
+            );
+
+            startActivity(intent);
         });
 
         // View Products Button
