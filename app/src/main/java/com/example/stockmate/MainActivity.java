@@ -53,11 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
         // View Products Button
         btnViewProducts.setOnClickListener(v -> {
-            Toast.makeText(
-                    this,
-                    "Product List screen coming next!",
-                    Toast.LENGTH_SHORT
-            ).show();
+
+            Intent intent = new Intent(
+                    MainActivity.this,
+                    ProductListActivity.class
+            );
+
+            startActivity(intent);
         });
     }
 

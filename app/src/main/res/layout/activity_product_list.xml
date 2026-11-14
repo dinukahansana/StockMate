@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FB"
+    android:fitsSystemWindows="true"
+    android:padding="20dp">
+
+    <!-- Screen Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Inventory"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#1D4ED8" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View and manage all your products"
+        android:textSize="15sp"
+        android:textColor="#64748B"
+        android:layout_marginTop="6dp" />
+
+    <!-- Add Product Button -->
+    <Button
+        android:id="@+id/btnAddFromList"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="+ Add New Product"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2563EB"
+        android:layout_marginTop="20dp" />
+
+    <!-- Empty List Message -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No products found. Add your first product!"
+        android:textSize="16sp"
+        android:textColor="#64748B"
+        android:gravity="center"
+        android:padding="25dp"
+        android:visibility="gone" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
