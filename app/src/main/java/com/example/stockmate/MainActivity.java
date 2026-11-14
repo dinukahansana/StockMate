@@ -1,24 +1,116 @@
 package com.example.stockmate;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Declare UI components
+    TextView tvTotalProducts, tvTotalUnits;
+    TextView tvInventoryValue, tvLowStock;
+
+    Button btnAddProduct, btnViewProducts;
+
+    // Database Helper
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        // Connect Java with XML components
+        tvTotalProducts = findViewById(R.id.tvTotalProducts);
+        tvTotalUnits = findViewById(R.id.tvTotalUnits);
+        tvInventoryValue = findViewById(R.id.tvInventoryValue);
+        tvLowStock = findViewById(R.id.tvLowStock);
+
+        btnAddProduct = findViewById(R.id.btnAddProduct);
+        btnViewProducts = findViewById(R.id.btnViewProducts);
+
+        // Initialize SQLite database
+        dbHelper = new DBHelper(this);
+
+        // Add Product Button
+        btnAddProduct.setOnClickListener(v -> {
+            Toast.makeText(
+                    this,
+                    "Add Product screen coming next!",
+                    Toast.LENGTH_SHORT
+            ).show();
         });
+
+        // View Products Button
+        btnViewProducts.setOnClickListener(v -> {
+            Toast.makeText(
+                    this,
+                    "Product List screen coming next!",
+                    Toast.LENGTH_SHORT
+            ).show();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (dbHelper != null) {
+            loadDashboard();
+        }
+    }
+
+    // Load inventory statistics
+    private void loadDashboard() {
+
+        ArrayList<Product> products =
+                dbHelper.getAllProducts();
+
+        int totalProducts = products.size();
+        int totalUnits = 0;
+        int lowStock = 0;
+
+        double inventoryValue = 0;
+
+        for (Product product : products) {
+
+            totalUnits += product.getQuantity();
+
+            inventoryValue += product.getStockValue();
+
+            // Products with 1-5 units are low stock
+            if (product.getQuantity() > 0 &&
+                    product.getQuantity() <= 5) {
+                lowStock++;
+            }
+        }
+
+        // Display statistics
+        tvTotalProducts.setText(
+                String.valueOf(totalProducts)
+        );
+
+        tvTotalUnits.setText(
+                String.valueOf(totalUnits)
+        );
+
+        tvLowStock.setText(
+                String.valueOf(lowStock)
+        );
+
+        tvInventoryValue.setText(
+                String.format(
+                        Locale.getDefault(),
+                        "Rs. %,.2f",
+                        inventoryValue
+                )
+        );
     }
 }
